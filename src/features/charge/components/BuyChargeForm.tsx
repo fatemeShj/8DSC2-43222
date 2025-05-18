@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { buyChargeSchema } from "../schemas/buyChargeSchema";
+import IOSSwitch from "@/components/IOSSwitch";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
 
@@ -18,6 +19,7 @@ export default function ChargeForm() {
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm<BuyChargeFormValues>({
     resolver: zodResolver(buyChargeSchema),
@@ -80,7 +82,16 @@ export default function ChargeForm() {
 
           <div className="flex items-center justify-center gap-2">
             <label>شارژ شگفت‌انگیز</label>
-            <input type="checkbox" {...register("amazingCharge")} />
+            <Controller
+              name="amazingCharge"
+              control={control}
+              render={({ field }) => (
+                <IOSSwitch
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                />
+              )}
+            />
           </div>
 
           <input
