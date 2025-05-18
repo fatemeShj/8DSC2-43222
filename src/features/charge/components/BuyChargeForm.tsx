@@ -50,30 +50,32 @@ export default function ChargeForm() {
         noValidate
       >
         <div className="w-full md:w-1/2 p-6 space-y-6">
-          <h2 className="text-lg font-bold text-center">
-            خرید آنلاین شارژ ایرانسل
-          </h2>
+          <h1 className="font-bold text-center">خرید آنلاین شارژ ایرانسل</h1>
 
-          <div className="flex justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => setValue("type", "اعتباری")}
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                simType === "اعتباری" ? "bg-primary text-black" : "bg-gray-200"
-              }`}
-            >
-              اعتباری
-            </button>
-            <button
-              type="button"
-              onClick={() => setValue("type", "دائمی")}
-              className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                simType === "دائمی" ? "bg-primary text-black" : "bg-gray-200"
-              }`}
-            >
-              دائمی
-            </button>
+          <div className="flex flex-col items-center gap-2">
+            <div className="text-gray-400">نوع سیم‌کارت</div>
+            <div className="border border-gray-200 rounded-full flex gap-2">
+              <button
+                type="button"
+                onClick={() => setValue("type", "اعتباری")}
+                className={`px-6 py-2 rounded-full text-sm font-semibold ${
+                  simType === "اعتباری" ? "bg-primary text-black" : "bg-white"
+                }`}
+              >
+                اعتباری
+              </button>
+              <button
+                type="button"
+                onClick={() => setValue("type", "دائمی")}
+                className={`px-6 py-2 rounded-full text-sm font-semibold ${
+                  simType === "دائمی" ? "bg-primary text-black" : "bg-white"
+                }`}
+              >
+                دائمی
+              </button>
+            </div>
           </div>
+
           {errors.type && (
             <p className="text-red-600 text-xs text-center">
               {errors.type.message}
@@ -81,7 +83,6 @@ export default function ChargeForm() {
           )}
 
           <div className="flex items-center justify-center gap-2">
-            <label>شارژ شگفت‌انگیز</label>
             <Controller
               name="amazingCharge"
               control={control}
@@ -92,19 +93,20 @@ export default function ChargeForm() {
                 />
               )}
             />
+            <label>شارژ شگفت‌انگیز</label>
           </div>
 
           <input
             type="text"
             placeholder="شماره تلفن همراه"
-            className="w-full p-2 border rounded-lg text-right"
+            className="w-full p-4 border border-secondary text-right bg-irc-gray rounded-full"
             {...register("phoneNumber")}
           />
           {errors.phoneNumber && (
             <p className="text-red-600 text-xs">{errors.phoneNumber.message}</p>
           )}
-
-          <div className="flex flex-wrap gap-2 justify-center">
+          <div>مبلغ شارژ</div>
+          <div className="grid grid-cols-3 gap-2 justify-center">
             {chargeOptions.map((opt) => (
               <button
                 key={opt}
@@ -132,7 +134,7 @@ export default function ChargeForm() {
             <input
               type="number"
               placeholder="مبلغ دلخواه (ریال)"
-              className="w-full p-2 border rounded-lg text-right"
+              className="w-full p-2 border bg-irc-gray rounded-lg text-right"
               {...register("amount", { valueAsNumber: true })}
             />
           )}
@@ -143,7 +145,7 @@ export default function ChargeForm() {
           <input
             type="email"
             placeholder="ایمیل (اختیاری)"
-            className="w-full p-2 border rounded-lg text-right"
+            className="w-full p-4 border border-secondary text-right bg-irc-gray rounded-full"
             {...register("email")}
           />
           {errors.email && (
@@ -152,7 +154,7 @@ export default function ChargeForm() {
 
           <button
             type="submit"
-            className="w-full bg-primary text-black font-semibold py-3 rounded-lg hover:bg-yellow-300 transition"
+            className="w-full bg-primary text-black font-semibold p-4 rounded-full hover:bg-yellow-300 transition"
           >
             انتخاب بانک و پرداخت
           </button>
