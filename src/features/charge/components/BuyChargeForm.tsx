@@ -59,22 +59,26 @@ export default function ChargeForm() {
     { label: "نام درگاه پرداخت", value: "---", bold: true },
   ];
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-50">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl"
+        className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl overflow-hidden"
         noValidate
       >
-        <div className="w-full md:w-1/2 p-6 space-y-6 m-7">
-          <h1 className="font-bold text-center">خرید آنلاین شارژ ایرانسل</h1>
+        <div className="w-full md:w-1/2 p-4 sm:p-6 space-y-6">
+          <h1 className="font-bold text-center text-lg sm:text-xl">
+            خرید آنلاین شارژ ایرانسل
+          </h1>
 
           <div className="flex flex-col items-center gap-2">
-            <div className="text-gray-400">نوع سیم‌کارت</div>
-            <div className="border border-gray-200 rounded-full flex gap-2">
+            <div className="text-gray-400 text-sm sm:text-base">
+              نوع سیم‌کارت
+            </div>
+            <div className="border border-gray-200 rounded-full flex gap-2 p-1">
               <button
                 type="button"
                 onClick={() => setValue("type", "اعتباری")}
-                className={`px-6 py-2 rounded-full text-sm font-semibold ${
+                className={`px-4 py-2 rounded-full text-sm font-semibold ${
                   simType === "اعتباری" ? "bg-primary text-black" : "bg-white"
                 }`}
               >
@@ -83,7 +87,7 @@ export default function ChargeForm() {
               <button
                 type="button"
                 onClick={() => setValue("type", "دائمی")}
-                className={`px-6 py-2 rounded-full text-sm font-semibold ${
+                className={`px-4 py-2 rounded-full text-sm font-semibold ${
                   simType === "دائمی" ? "bg-primary text-black" : "bg-white"
                 }`}
               >
@@ -115,14 +119,15 @@ export default function ChargeForm() {
           <input
             type="text"
             placeholder="شماره تلفن همراه"
-            className="w-full p-4 border border-secondary text-right bg-secondary-irc-gray rounded-full"
+            className="w-full p-3 border border-secondary text-right bg-secondary-irc-gray rounded-full text-sm"
             {...register("phoneNumber")}
           />
           {errors.phoneNumber && (
             <p className="text-red-600 text-xs">{errors.phoneNumber.message}</p>
           )}
-          <div>مبلغ شارژ</div>
-          <div className="grid grid-cols-3 gap-2 justify-center">
+
+          <div className="text-sm">مبلغ شارژ</div>
+          <div className="grid grid-cols-3 gap-2">
             {chargeOptions.map((opt) => (
               <button
                 key={opt}
@@ -131,7 +136,7 @@ export default function ChargeForm() {
                   setValue("amount", opt, { shouldValidate: true });
                   setShowCustomAmount(false);
                 }}
-                className={`px-4 py-2 rounded-full text-sm ${
+                className={`px-2 py-2 rounded-full text-sm  ${
                   amount === opt ? "bg-primary" : "bg-gray-200"
                 }`}
               >
@@ -146,11 +151,12 @@ export default function ChargeForm() {
               سایر مبالغ
             </button>
           </div>
+
           {showCustomAmount && (
             <input
               type="number"
               placeholder="مبلغ دلخواه (ریال)"
-              className="w-full p-2 border bg-secondary-irc-gray rounded-lg text-right"
+              className="w-full p-3 border bg-secondary-irc-gray rounded-lg text-right text-sm"
               {...register("amount", { valueAsNumber: true })}
             />
           )}
@@ -161,7 +167,7 @@ export default function ChargeForm() {
           <input
             type="email"
             placeholder="ایمیل (اختیاری)"
-            className="w-full p-4 border border-secondary text-right bg-seconsary-irc-gray rounded-full"
+            className="w-full p-3 border border-secondary text-right bg-secondary-irc-gray rounded-full text-sm"
             {...register("email")}
           />
           {errors.email && (
@@ -170,19 +176,19 @@ export default function ChargeForm() {
 
           <button
             type="submit"
-            className="w-full bg-primary text-black font-semibold p-4 rounded-full hover:bg-yellow-300 transition"
+            className="w-full bg-primary text-black font-semibold p-3 rounded-full hover:bg-yellow-300 transition text-sm"
           >
             انتخاب بانک و پرداخت
           </button>
         </div>
 
-        <div className="w-full md:w-1/2 bg-secondary-irc-gray m-7 p-6 space-y-4 rounded-lg">
-          <h2 className="text-lg font-bold text-center bg-white p-4 rounded-lg">
+        <div className="w-full md:w-1/2 bg-secondary-irc-gray p-4 md:m-6 sm:p-6 space-y-4 rounded-lg">
+          <h2 className="text-md sm:text-lg font-bold text-center bg-white p-4 rounded-lg">
             فاکتور نهایی
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-4 text-sm sm:text-base">
             {invoiceDetails.map((item, index) => (
-              <div key={index} className="flex flex-col gap-2">
+              <div key={index} className="flex flex-col gap-1">
                 <div className="text-sm text-primary-irc-gray">
                   {item.label}
                 </div>
