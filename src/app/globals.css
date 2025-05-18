@@ -7,6 +7,8 @@ body {
 @theme {
   --color-primary: #ffcc00;
   --color-secondary: #fff3e5;
-  --color-irc-gray: #efeff4
+  --color-primary-irc-gray:#939298;
+  --color-secondary-irc-gray: #efeff4;
+
 }
 

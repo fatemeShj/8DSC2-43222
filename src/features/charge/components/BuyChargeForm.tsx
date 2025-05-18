@@ -42,6 +42,22 @@ export default function ChargeForm() {
   const phone = watch("phoneNumber");
   const email = watch("email");
 
+  const invoiceDetails = [
+    { label: "نوع سیم‌کارت", value: simType, bold: true },
+    { label: "مستقیم به شماره", value: phone || "---" },
+    {
+      label: "مبلغ شارژ",
+      value: amount ? `${(amount * 1.1).toLocaleString()} ریال` : "0 ریال",
+      bold: true,
+    },
+    {
+      label: "نوع شارژ",
+      value: isAmazing ? "شگفت‌انگیز" : "معمولی",
+      bold: true,
+    },
+    { label: "ایمیل", value: email || "---", bold: true },
+    { label: "نام درگاه پرداخت", value: "---", bold: true },
+  ];
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <form
@@ -49,7 +65,7 @@ export default function ChargeForm() {
         className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl"
         noValidate
       >
-        <div className="w-full md:w-1/2 p-6 space-y-6">
+        <div className="w-full md:w-1/2 p-6 space-y-6 m-7">
           <h1 className="font-bold text-center">خرید آنلاین شارژ ایرانسل</h1>
 
           <div className="flex flex-col items-center gap-2">
@@ -99,7 +115,7 @@ export default function ChargeForm() {
           <input
             type="text"
             placeholder="شماره تلفن همراه"
-            className="w-full p-4 border border-secondary text-right bg-irc-gray rounded-full"
+            className="w-full p-4 border border-secondary text-right bg-secondary-irc-gray rounded-full"
             {...register("phoneNumber")}
           />
           {errors.phoneNumber && (
@@ -134,7 +150,7 @@ export default function ChargeForm() {
             <input
               type="number"
               placeholder="مبلغ دلخواه (ریال)"
-              className="w-full p-2 border bg-irc-gray rounded-lg text-right"
+              className="w-full p-2 border bg-secondary-irc-gray rounded-lg text-right"
               {...register("amount", { valueAsNumber: true })}
             />
           )}
@@ -145,7 +161,7 @@ export default function ChargeForm() {
           <input
             type="email"
             placeholder="ایمیل (اختیاری)"
-            className="w-full p-4 border border-secondary text-right bg-irc-gray rounded-full"
+            className="w-full p-4 border border-secondary text-right bg-seconsary-irc-gray rounded-full"
             {...register("email")}
           />
           {errors.email && (
@@ -159,22 +175,22 @@ export default function ChargeForm() {
             انتخاب بانک و پرداخت
           </button>
         </div>
-        <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-gray-200 p-6 space-y-4">
-          <h2 className="text-lg font-bold text-center">فاکتور نهایی</h2>
-          <div className="text-sm space-y-2 text-gray-700">
-            <div>
-              نوع سیم‌کارت: <span className="font-bold">{simType}</span>
-            </div>
-            <div>مستقیم به شماره: {phone || "---"}</div>
-            <div>
-              مبلغ شارژ:{" "}
-              <span className="font-bold">
-                {amount ? (amount * 1.1).toLocaleString() : 0} ریال
-              </span>
-            </div>
-            <div>نوع شارژ: {isAmazing ? "شگفت‌انگیز" : "معمولی"}</div>
-            <div>ایمیل: {email || "---"}</div>
-            <div>نام درگاه پرداخت: ---</div>
+
+        <div className="w-full md:w-1/2 bg-secondary-irc-gray m-7 p-6 space-y-4 rounded-lg">
+          <h2 className="text-lg font-bold text-center bg-white p-4 rounded-lg">
+            فاکتور نهایی
+          </h2>
+          <div className="space-y-4">
+            {invoiceDetails.map((item, index) => (
+              <div key={index} className="flex flex-col gap-2">
+                <div className="text-sm text-primary-irc-gray">
+                  {item.label}
+                </div>
+                <div className={`text-base ${item.bold ? "font-bold" : ""}`}>
+                  {item.value}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </form>
