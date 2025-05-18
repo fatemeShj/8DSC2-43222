@@ -41,31 +41,12 @@ export default function ChargeForm() {
   const email = watch("email");
 
   return (
-    <div className="min-h-screen bg-red-900 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center px-4 py-10">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl"
         noValidate
       >
-        <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-gray-200 p-6 space-y-4">
-          <h2 className="text-lg font-bold text-center">فاکتور نهایی</h2>
-          <div className="text-sm space-y-2 text-gray-700">
-            <div>
-              نوع سیم‌کارت: <span className="font-bold">{simType}</span>
-            </div>
-            <div>مستقیم به شماره: {phone || "---"}</div>
-            <div>
-              مبلغ شارژ:{" "}
-              <span className="font-bold">
-                {amount ? (amount * 1.1).toLocaleString() : 0} ریال
-              </span>
-            </div>
-            <div>نوع شارژ: {isAmazing ? "شگفت‌انگیز" : "معمولی"}</div>
-            <div>ایمیل: {email || "---"}</div>
-            <div>نام درگاه پرداخت: ---</div>
-          </div>
-        </div>
-
         <div className="w-full md:w-1/2 p-6 space-y-6">
           <h2 className="text-lg font-bold text-center">
             خرید آنلاین شارژ ایرانسل
@@ -164,6 +145,24 @@ export default function ChargeForm() {
           >
             انتخاب بانک و پرداخت
           </button>
+        </div>
+        <div className="w-full md:w-1/2 border-b md:border-b-0 md:border-r border-gray-200 p-6 space-y-4">
+          <h2 className="text-lg font-bold text-center">فاکتور نهایی</h2>
+          <div className="text-sm space-y-2 text-gray-700">
+            <div>
+              نوع سیم‌کارت: <span className="font-bold">{simType}</span>
+            </div>
+            <div>مستقیم به شماره: {phone || "---"}</div>
+            <div>
+              مبلغ شارژ:{" "}
+              <span className="font-bold">
+                {amount ? (amount * 1.1).toLocaleString() : 0} ریال
+              </span>
+            </div>
+            <div>نوع شارژ: {isAmazing ? "شگفت‌انگیز" : "معمولی"}</div>
+            <div>ایمیل: {email || "---"}</div>
+            <div>نام درگاه پرداخت: ---</div>
+          </div>
         </div>
       </form>
     </div>
