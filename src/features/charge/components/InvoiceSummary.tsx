@@ -24,7 +24,7 @@ const InvoiceSummary = ({
           ))}
         </div>
       </div>
-      <div className="block md:hidden  bg-[#fff5cc] border border-[#ffd733] rounded-lg text-[#212529] text-sm p-4">
+      <div className="block md:hidden  bg-[#fff5cc] border border-[#ffd733] rounded-lg text-[#212529] text-sm p-4 m-4">
         {details.map((item, index) => (
           <div
             key={index}

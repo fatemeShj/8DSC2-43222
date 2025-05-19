@@ -13,7 +13,7 @@ export const buyChargeSchema = z.object({
     })
     .min(10000, "حداقل مبلغ ۱۰,۰۰۰ ریال است")
     .max(900000, "حداکثر مبلغ ۹۰۰,۰۰۰ ریال است"),
-  email: z.string().email("ایمیل نامعتبر است"),
+  email: z.string().email("ایمیل نامعتبر است").optional(),
 });
 
 export type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;

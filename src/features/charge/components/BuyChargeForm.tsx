@@ -177,7 +177,7 @@ export default function ChargeForm() {
             <input
               type="number"
               placeholder="مبلغ دلخواه (ریال)"
-              className="w-full p-3 border bg-secondary-irc-gray rounded-lg text-right text-sm"
+              className="w-full p-3 border border-secondary text-right bg-secondary-irc-gray rounded-full text-sm"
               {...register("amount", { valueAsNumber: true })}
             />
           )}
