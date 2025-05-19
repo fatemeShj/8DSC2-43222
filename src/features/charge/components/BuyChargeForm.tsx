@@ -7,10 +7,9 @@ import { z } from "zod";
 import { buyChargeSchema } from "../schemas/buyChargeSchema";
 import IOSSwitch from "@/components/IOSSwitch";
 import { calculatePriceWithTax } from "@/utils/tax";
+import chargeOptions from "@/data/chargeOptions";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
-
-const chargeOptions = [10000, 20000, 50000, 100000, 200000];
 
 export default function ChargeForm() {
   const [showCustomAmount, setShowCustomAmount] = useState(false);
@@ -131,25 +130,43 @@ export default function ChargeForm() {
 
           <div className="text-sm">مبلغ شارژ</div>
           <div className="grid grid-cols-3 gap-2">
-            {chargeOptions.map((opt) => (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => {
-                  setValue("amount", opt, { shouldValidate: true });
-                  setShowCustomAmount(false);
-                }}
-                className={`px-2 py-2 rounded-full text-sm  ${
-                  amount === opt ? "bg-primary" : "bg-gray-200"
-                }`}
-              >
-                {opt.toLocaleString()} ریال
-              </button>
-            ))}
+            {chargeOptions.map((opt) => {
+              const isDisabled =
+                (opt.type !== "both" && opt.type !== simType) ||
+                (isAmazing && !opt.amazingAvailable);
+
+              return (
+                <button
+                  key={opt.amount}
+                  type="button"
+                  disabled={isDisabled}
+                  onClick={() => {
+                    if (!isDisabled) {
+                      setValue("amount", opt.amount, { shouldValidate: true });
+                      setShowCustomAmount(false);
+                    }
+                  }}
+                  className={`px-2 py-2 rounded-full text-sm 
+        ${amount === opt.amount ? "bg-primary" : "bg-gray-200"} 
+        ${isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-100"}
+      `}
+                >
+                  {opt.amount.toLocaleString()} ریال
+                </button>
+              );
+            })}
+
             <button
               type="button"
-              className="px-4 py-2 rounded-full text-sm bg-gray-200"
-              onClick={() => setShowCustomAmount(true)}
+              disabled={isAmazing}
+              className={`px-4 py-2 rounded-full text-sm ${
+                isAmazing
+                  ? "opacity-50 cursor-not-allowed bg-gray-200"
+                  : "bg-gray-200 hover:bg-yellow-100"
+              }`}
+              onClick={() => {
+                if (!isAmazing) setShowCustomAmount(true);
+              }}
             >
               سایر مبالغ
             </button>
