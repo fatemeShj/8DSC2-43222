@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { buyChargeSchema } from "../schemas/buyChargeSchema";
 import IOSSwitch from "@/components/IOSSwitch";
+import { calculatePriceWithTax } from "@/utils/tax";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
 
@@ -47,7 +48,9 @@ export default function ChargeForm() {
     { label: "مستقیم به شماره", value: phone || "---" },
     {
       label: "مبلغ شارژ",
-      value: amount ? `${(amount * 1.1).toLocaleString()} ریال` : "0 ریال",
+      value: amount
+        ? `${calculatePriceWithTax(amount).toLocaleString()} ریال`
+        : "0 ریال",
       bold: true,
     },
     {
@@ -74,7 +77,7 @@ export default function ChargeForm() {
             <div className="text-gray-400 text-sm sm:text-base">
               نوع سیم‌کارت
             </div>
-            <div className="border border-gray-200 rounded-full flex gap-2 p-1">
+            <div className="border border-gray-200 rounded-full flex gap-2">
               <button
                 type="button"
                 onClick={() => setValue("type", "اعتباری")}
