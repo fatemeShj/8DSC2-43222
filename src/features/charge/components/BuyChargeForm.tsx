@@ -9,11 +9,17 @@ import IOSSwitch from "@/components/IOSSwitch";
 import { calculatePriceWithTax } from "@/utils/tax";
 import chargeOptions from "@/data/chargeOptions";
 import InvoiceSummary from "./InvoiceSummary";
+import Toast from "@/components/Toast";
+import { submitBuyCharge } from "@/service/submitBuyCharge";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
 
 export default function ChargeForm() {
   const [showCustomAmount, setShowCustomAmount] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "error" | "success";
+  } | null>(null);
 
   const {
     register,
@@ -32,9 +38,41 @@ export default function ChargeForm() {
       email: "",
     },
   });
+  const simTypeMap = {
+    دائمی: "postpaid",
+    اعتباری: "prepaid",
+  } as const;
 
-  const onSubmit = (data: BuyChargeFormValues) => {
-    alert(JSON.stringify(data, null, 2));
+  type SimTypeMapped = (typeof simTypeMap)[keyof typeof simTypeMap];
+
+  const onSubmit = async (data: BuyChargeFormValues) => {
+    try {
+      const payload: {
+        channel: string;
+        sim_type: SimTypeMapped;
+        amount: number;
+        msisdn: string;
+        is_wow: boolean;
+      } = {
+        channel: "eShop",
+        sim_type: simTypeMap[data.type],
+        amount: data.amount,
+        msisdn: data.phoneNumber,
+        is_wow: data.amazingCharge,
+      };
+
+      const response = await submitBuyCharge(payload);
+      console.log("response=>", response);
+      setToast({
+        message: "درخواست خرید شارژ با موفقیت ارسال شد.",
+        type: "success",
+      });
+    } catch (error) {
+      setToast({
+        message: error as string,
+        type: "error",
+      });
+    }
   };
 
   const simType = watch("type");
@@ -201,6 +239,13 @@ export default function ChargeForm() {
           >
             انتخاب بانک و پرداخت
           </button>
+          {toast && (
+            <Toast
+              message={toast.message}
+              type={toast.type}
+              onClose={() => setToast(null)}
+            />
+          )}
         </div>
 
         <InvoiceSummary details={invoiceDetails} />
