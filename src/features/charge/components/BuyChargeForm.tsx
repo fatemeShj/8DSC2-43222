@@ -8,6 +8,7 @@ import { buyChargeSchema } from "../schemas/buyChargeSchema";
 import IOSSwitch from "@/components/IOSSwitch";
 import { calculatePriceWithTax } from "@/utils/tax";
 import chargeOptions from "@/data/chargeOptions";
+import InvoiceSummary from "./InvoiceSummary";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
 
@@ -202,23 +203,7 @@ export default function ChargeForm() {
           </button>
         </div>
 
-        <div className="w-full md:w-1/2 bg-secondary-irc-gray p-4 md:m-6 sm:p-6 space-y-4 rounded-lg">
-          <h2 className="text-md sm:text-lg font-bold text-center bg-white p-4 rounded-lg">
-            فاکتور نهایی
-          </h2>
-          <div className="space-y-4 text-sm sm:text-base">
-            {invoiceDetails.map((item, index) => (
-              <div key={index} className="flex flex-col gap-1">
-                <div className="text-sm text-primary-irc-gray">
-                  {item.label}
-                </div>
-                <div className={`text-base ${item.bold ? "font-bold" : ""}`}>
-                  {item.value}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <InvoiceSummary details={invoiceDetails} />
       </form>
     </div>
   );
