@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
+:root {
+  --font-bonyadeKoodakK: "BonyadeKoodakK", sans-serif;
+}
+
 body {
   direction: rtl;
+  font-family: var(--font-bonyadeKoodakK);
 }
 
 @theme {
@@ -10,5 +15,12 @@ body {
   --color-primary-irc-gray:#939298;
   --color-secondary-irc-gray: #efeff4;
 
+}
+
+@font-face {
+  font-family: "BonyadeKoodakK";
+  src: url("/BonyadeKoodakKoochak-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
