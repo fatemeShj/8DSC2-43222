@@ -19,7 +19,7 @@ const PaymentGateway = ({ bankInfo, onSelect }: Props) => {
   };
 
   return (
-    <div className="bg-secondary-irc-gray p-4 flex flex-col gap-4 rounded-lg text-sm">
+    <div className="bg-secondary-irc-gray p-4 flex flex-col justify-between items-center gap-4 rounded-lg text-sm">
       <div>انتخاب درگاه پرداخت :</div>
       <div className="flex flex-wrap gap-4">
         {bankInfo.banks.map((bank) => (
