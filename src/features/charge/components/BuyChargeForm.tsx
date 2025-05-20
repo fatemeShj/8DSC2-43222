@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { buyChargeSchema } from "../schemas/buyChargeSchema";
-import IOSSwitch from "@/components/IOSSwitch";
+import ToggleSwitch from "@/components/ToggleSwitch";
 import { calculatePriceWithTax } from "@/utils/tax";
 import chargeOptions from "@/data/chargeOptions";
 import InvoiceSummary from "./InvoiceSummary";
@@ -181,7 +181,7 @@ export default function ChargeForm() {
               name="amazingCharge"
               control={control}
               render={({ field }) => (
-                <IOSSwitch
+                <ToggleSwitch
                   checked={field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
                 />
