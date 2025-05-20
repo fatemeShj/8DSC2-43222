@@ -140,10 +140,10 @@ export default function ChargeForm() {
     <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-50">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl overflow-hidden"
+        className="bg-white rounded-2xl shadow-md flex flex-col md:flex-row w-full max-w-5xl overflow-hidden justify-between items-center"
         noValidate
       >
-        <div className="w-full md:w-1/2 p-4 sm:p-6 space-y-6">
+        <div className="w-full md:w-1/2 p-4 mx-auto sm:p-6 space-y-6">
           <h1 className="font-bold text-center text-lg sm:text-xl">
             خرید آنلاین شارژ ایرانسل
           </h1>

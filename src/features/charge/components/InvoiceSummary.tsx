@@ -10,7 +10,7 @@ const InvoiceSummary = ({
 }) => {
   return (
     <>
-      <div className="hidden md:block w-full md:w-1/2 bg-secondary-irc-gray p-4 md:m-6 sm:p-6 space-y-4 rounded-lg">
+      <div className="hidden md:block w-full md:w-1/3 bg-secondary-irc-gray p-4 md:m-6 sm:p-6 space-y-4 rounded-lg">
         <h2 className="text-md sm:text-lg font-bold text-center bg-white p-4 rounded-lg">
           فاکتور نهایی
         </h2>
