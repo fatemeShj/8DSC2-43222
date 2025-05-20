@@ -42,7 +42,7 @@ export default function ChargeForm() {
       amazingCharge: false,
       phoneNumber: "",
       amount: 20000,
-      email: "",
+      email: " ",
     },
   });
 
@@ -54,6 +54,7 @@ export default function ChargeForm() {
   type SimTypeMapped = (typeof simTypeMap)[keyof typeof simTypeMap];
 
   const onSubmit = async (data: BuyChargeFormValues) => {
+    console.log("hi");
     try {
       const payload: {
         channel: string;
@@ -197,14 +198,10 @@ export default function ChargeForm() {
             <input
               type="text"
               placeholder="شماره تلفن همراه"
-              className="w-full p-3 border border-secondary text-right bg-secondary-irc-gray rounded-full text-sm"
+              className={`w-full p-3 text-right bg-secondary-irc-gray rounded-full text-sm
+    border ${errors.phoneNumber ? "border-red-500" : "border-secondary"}`}
               {...register("phoneNumber")}
             />
-            {errors.phoneNumber && (
-              <p className="text-red-600 text-xs">
-                {errors.phoneNumber.message}
-              </p>
-            )}
 
             <div className="text-sm text-[#8B8B8D]">مبلغ شارژ</div>
             <div className="grid grid-cols-3 gap-2">
@@ -271,12 +268,10 @@ export default function ChargeForm() {
             <input
               type="email"
               placeholder="ایمیل (اختیاری)"
-              className="w-full p-3 border border-secondary text-right bg-secondary-irc-gray rounded-full text-sm"
+              className={`w-full p-3 text-right bg-secondary-irc-gray rounded-full text-sm
+    border ${errors.email ? "border-red-500" : "border-secondary"}`}
               {...register("email")}
             />
-            {errors.email && (
-              <p className="text-red-600 text-xs">{errors.email.message}</p>
-            )}
 
             {bankResponse && bankInfo && (
               <PaymentGateway bankInfo={bankInfo} onSelect={handleBankSelect} />
