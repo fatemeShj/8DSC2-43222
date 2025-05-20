@@ -10,6 +10,7 @@ import { calculatePriceWithTax } from "@/utils/tax";
 import chargeOptions from "@/data/chargeOptions";
 import InvoiceSummary from "./InvoiceSummary";
 import Toast from "@/components/Toast";
+import { BankResponse } from "@/types/bankValidation";
 // import { submitBuyCharge } from "@/service/submitBuyCharge";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
@@ -67,14 +68,14 @@ export default function ChargeForm() {
         body: JSON.stringify(payload),
       });
 
-      const finalData = await response.json();
-      console.log("data from API =>", finalData);
-      // const response = await submitBuyCharge(payload);
-      console.log("response=>", response);
-      setToast({
-        message: "درخواست خرید شارژ با موفقیت ارسال شد.",
-        type: "success",
-      });
+      const finalData: BankResponse = await response.json();
+
+      if (finalData.result_code !== 0) {
+        setToast({
+          message: finalData.info.fa.message,
+          type: "error",
+        });
+      }
     } catch (error) {
       setToast({
         message: error as string,
