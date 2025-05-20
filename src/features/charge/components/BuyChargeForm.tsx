@@ -53,6 +53,7 @@ export default function ChargeForm() {
 
   type SimTypeMapped = (typeof simTypeMap)[keyof typeof simTypeMap];
 
+  // Handle form submission
   const onSubmit = async (data: BuyChargeFormValues) => {
     console.log("hi");
     try {
@@ -97,6 +98,7 @@ export default function ChargeForm() {
     }
   };
 
+  // Handle bank selection
   const handleBankSelect = (bankName: string) => {
     if (bankInfo && isBankValidation(bankInfo)) {
       const selectedBank = bankInfo.banks.find(
@@ -136,6 +138,8 @@ export default function ChargeForm() {
     { label: "ایمیل", value: email || "---", bold: true },
     { label: "نام درگاه پرداخت", value: selectedBankName || "---", bold: true },
   ];
+
+  // Handle amazing charge toggle effect
   useEffect(() => {
     if (isAmazing) {
       const firstAmazingOption = chargeOptions.find(
