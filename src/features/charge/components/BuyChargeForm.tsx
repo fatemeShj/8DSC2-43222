@@ -12,6 +12,7 @@ import InvoiceSummary from "./InvoiceSummary";
 import Toast from "@/components/Toast";
 import { BankResponse } from "@/types/bankValidation";
 import PaymentGateway from "./PaymentGateway";
+import { isBankValidation } from "@/guards/isBankValidation";
 // import { submitBuyCharge } from "@/service/submitBuyCharge";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
@@ -22,9 +23,9 @@ export default function ChargeForm() {
     message: string;
     type: "error" | "success";
   } | null>(null);
-
   const [bankResponse, setBankResponse] = useState<boolean | null>(null);
   const [bankInfo, setBankInfo] = useState<BankResponse | null>(null);
+  const [selectedBankName, setSelectedBankName] = useState<string>("---");
 
   const {
     register,
@@ -43,6 +44,7 @@ export default function ChargeForm() {
       email: "",
     },
   });
+
   const simTypeMap = {
     دائمی: "postpaid",
     اعتباری: "prepaid",
@@ -65,6 +67,7 @@ export default function ChargeForm() {
         msisdn: data.phoneNumber,
         is_wow: data.amazingCharge,
       };
+
       setBankResponse(null);
       const response = await fetch("/api/submit-buy-charge", {
         method: "POST",
@@ -92,6 +95,19 @@ export default function ChargeForm() {
     }
   };
 
+  const handleBankSelect = (bankName: string) => {
+    if (bankInfo && isBankValidation(bankInfo)) {
+      const selectedBank = bankInfo.banks.find(
+        (bank) => bank.bankName.fa === bankName
+      );
+      if (selectedBank) {
+        setSelectedBankName(selectedBank.bankName.fa);
+      }
+    } else {
+      console.warn("اطلاعات بانک معتبر نیست");
+    }
+  };
+
   const simType = watch("type");
   const isAmazing = watch("amazingCharge");
   const amount = watch("amount");
@@ -114,8 +130,9 @@ export default function ChargeForm() {
       bold: true,
     },
     { label: "ایمیل", value: email || "---", bold: true },
-    { label: "نام درگاه پرداخت", value: "---", bold: true },
+    { label: "نام درگاه پرداخت", value: selectedBankName || "---", bold: true },
   ];
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gray-50">
       <form
@@ -153,7 +170,6 @@ export default function ChargeForm() {
               </button>
             </div>
           </div>
-
           {errors.type && (
             <p className="text-red-600 text-xs text-center">
               {errors.type.message}
@@ -203,9 +219,13 @@ export default function ChargeForm() {
                     }
                   }}
                   className={`px-2 py-2 rounded-full text-sm 
-        ${amount === opt.amount ? "bg-primary" : "bg-gray-200"} 
-        ${isDisabled ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-100"}
-      `}
+                    ${amount === opt.amount ? "bg-primary" : "bg-gray-200"} 
+                    ${
+                      isDisabled
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-yellow-100"
+                    }
+                  `}
                 >
                   {opt.amount.toLocaleString()} ریال
                 </button>
@@ -249,13 +269,18 @@ export default function ChargeForm() {
           {errors.email && (
             <p className="text-red-600 text-xs">{errors.email.message}</p>
           )}
-          {bankResponse && <PaymentGateway bankInfo={bankInfo} />}
+
+          {bankResponse && bankInfo && (
+            <PaymentGateway bankInfo={bankInfo} onSelect={handleBankSelect} />
+          )}
+
           <button
             type="submit"
             className="w-full bg-primary text-black font-semibold p-3 rounded-full hover:bg-yellow-300 transition text-sm"
           >
             انتخاب بانک و پرداخت
           </button>
+
           {toast && (
             <Toast
               message={toast.message}
