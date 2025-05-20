@@ -13,6 +13,7 @@ import Toast from "@/components/Toast";
 import { BankResponse } from "@/types/bankValidation";
 import PaymentGateway from "./PaymentGateway";
 import { isBankValidation } from "@/guards/isBankValidation";
+import { toPersianNumbers } from "@/utils/PersianNumber";
 // import { submitBuyCharge } from "@/service/submitBuyCharge";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
@@ -120,7 +121,9 @@ export default function ChargeForm() {
     {
       label: "مبلغ شارژ",
       value: amount
-        ? `${calculatePriceWithTax(amount).toLocaleString()} ریال`
+        ? `${toPersianNumbers(
+            calculatePriceWithTax(amount).toLocaleString()
+          )} ریال`
         : "0 ریال",
       bold: true,
     },
@@ -227,7 +230,7 @@ export default function ChargeForm() {
                     }
                   `}
                 >
-                  {opt.amount.toLocaleString()} ریال
+                  {toPersianNumbers(opt.amount.toLocaleString())} ریال
                 </button>
               );
             })}
