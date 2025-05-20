@@ -12,7 +12,7 @@ export type BankValidation = {
   result_code: number;
 };
 
-type BankInfo = {
+export type BankInfo = {
   bankCode: string;
   bankDisplayOrder: number;
   bankIcon: string;

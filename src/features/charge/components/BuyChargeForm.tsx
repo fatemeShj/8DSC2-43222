@@ -11,6 +11,7 @@ import chargeOptions from "@/data/chargeOptions";
 import InvoiceSummary from "./InvoiceSummary";
 import Toast from "@/components/Toast";
 import { BankResponse } from "@/types/bankValidation";
+import PaymentGateway from "./PaymentGateway";
 // import { submitBuyCharge } from "@/service/submitBuyCharge";
 
 type BuyChargeFormValues = z.infer<typeof buyChargeSchema>;
@@ -21,6 +22,9 @@ export default function ChargeForm() {
     message: string;
     type: "error" | "success";
   } | null>(null);
+
+  const [bankResponse, setBankResponse] = useState<boolean | null>(null);
+  const [bankInfo, setBankInfo] = useState<BankResponse | null>(null);
 
   const {
     register,
@@ -61,7 +65,7 @@ export default function ChargeForm() {
         msisdn: data.phoneNumber,
         is_wow: data.amazingCharge,
       };
-
+      setBankResponse(null);
       const response = await fetch("/api/submit-buy-charge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,10 +75,14 @@ export default function ChargeForm() {
       const finalData: BankResponse = await response.json();
 
       if (finalData.result_code !== 0) {
+        setBankResponse(false);
         setToast({
           message: finalData.info.fa.message,
           type: "error",
         });
+      } else {
+        setBankInfo(finalData);
+        setBankResponse(true);
       }
     } catch (error) {
       setToast({
@@ -241,7 +249,7 @@ export default function ChargeForm() {
           {errors.email && (
             <p className="text-red-600 text-xs">{errors.email.message}</p>
           )}
-
+          {bankResponse && <PaymentGateway bankInfo={bankInfo} />}
           <button
             type="submit"
             className="w-full bg-primary text-black font-semibold p-3 rounded-full hover:bg-yellow-300 transition text-sm"
