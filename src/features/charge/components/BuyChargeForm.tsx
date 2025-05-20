@@ -149,7 +149,7 @@ export default function ChargeForm() {
           </h1>
 
           <div className="flex flex-col items-center gap-2">
-            <div className="text-gray-400 text-sm sm:text-base">
+            <div className="text-[#8B8B8D] text-sm sm:text-base">
               نوع سیم‌کارت
             </div>
             <div className="border border-gray-200 rounded-full flex gap-2">
@@ -190,7 +190,7 @@ export default function ChargeForm() {
                 />
               )}
             />
-            <label>شارژ شگفت‌انگیز</label>
+            <label className="text-sm text-[#212529]">شارژ شگفت‌انگیز</label>
           </div>
 
           <input
@@ -203,7 +203,7 @@ export default function ChargeForm() {
             <p className="text-red-600 text-xs">{errors.phoneNumber.message}</p>
           )}
 
-          <div className="text-sm">مبلغ شارژ</div>
+          <div className="text-sm text-[#8B8B8D]">مبلغ شارژ</div>
           <div className="grid grid-cols-3 gap-2">
             {chargeOptions.map((opt) => {
               const isDisabled =
