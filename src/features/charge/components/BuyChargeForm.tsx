@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -136,7 +136,21 @@ export default function ChargeForm() {
     { label: "ایمیل", value: email || "---", bold: true },
     { label: "نام درگاه پرداخت", value: selectedBankName || "---", bold: true },
   ];
+  useEffect(() => {
+    if (isAmazing) {
+      const firstAmazingOption = chargeOptions.find(
+        (opt) =>
+          opt.amazingAvailable && (opt.type === "both" || opt.type === simType)
+      );
 
+      if (firstAmazingOption) {
+        setValue("amount", firstAmazingOption.amount, {
+          shouldValidate: true,
+        });
+        setShowCustomAmount(false);
+      }
+    }
+  }, [isAmazing, simType, setValue]);
   return (
     <div className="grid grid-cols-12 gap-4 max-w-5xl w-full mx-auto bg-white rounded-2xl shadow-md">
       <div className="col-span-12 md:col-span-7">
