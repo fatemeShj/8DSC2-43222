@@ -1,8 +1,7 @@
 You can see the code challenge here:
 https://8-dsc-2-43222.vercel.app/
 
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A simple application for mobile SIM card recharge
 
 ## Getting Started
 
